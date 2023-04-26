@@ -1,0 +1,102 @@
+package cn.schoolwow.quickdao.domain.internal;
+
+import cn.schoolwow.quickdao.dao.dql.condition.AbstractCondition;
+import cn.schoolwow.quickdao.dao.dql.subCondition.AbstractSubCondition;
+import cn.schoolwow.quickdao.dao.dql.subCondition.SubCondition;
+import cn.schoolwow.quickdao.domain.external.Entity;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 子查询
+ */
+public class SubQuery<T, P> implements Serializable {
+    /**
+     * 关联实体
+     */
+    public transient Entity entity;
+    /**
+     * 表别名
+     */
+    public String tableAliasName;
+    /**
+     * 主表字段
+     */
+    public String primaryField;
+    /**
+     * 子表字段
+     */
+    public String joinTableField;
+    /**
+     * 对象变量名
+     */
+    public String compositField;
+    /**
+     * on条件映射
+     */
+    public Map<String, String> onConditionMap = new HashMap();
+    /**
+     * 连接方式
+     */
+    public String join = "join";
+    /**
+     * 查询条件
+     */
+    public String where = "";
+    /**
+     * 排除字段
+     */
+    public List<String> excludeColumnList = new ArrayList<>();
+    /**
+     * 查询参数
+     */
+    public List parameterList = new ArrayList();
+    /**
+     * join Condition 关联子查询
+     */
+    public StringBuilder subQuerySQLBuilder;
+    /**
+     * join Condition 关联子查询Query
+     */
+    public Query subQuery;
+    /**
+     * 关联SubCondition对象
+     */
+    public AbstractSubCondition subCondition;
+    /**
+     * 父表
+     */
+    public SubQuery<T, P> parentSubQuery;
+    /**
+     * 父表
+     */
+    public SubCondition<T, P> parentSubCondition;
+    /**
+     * 主表
+     */
+    public transient Query query;
+    /**
+     * 主表
+     */
+    public transient AbstractCondition<P> condition;
+
+    @Override
+    public String toString() {
+        return "\n{\n" +
+                "关联实体:" + (null == entity ? "无" : entity.clazz) + "\n"
+                + "表别名:" + tableAliasName + "\n"
+                + "主表字段:" + primaryField + "\n"
+                + "子表字段:" + joinTableField + "\n"
+                + "对象变量名:" + compositField + "\n"
+                + "on条件映射:" + onConditionMap + "\n"
+                + "连接方式:" + join + "\n"
+                + "查询条件:" + where + "\n"
+                + "查询参数:" + parameterList + "\n"
+                + "关联子查询:" + subQuerySQLBuilder + "\n"
+                + "}\n";
+    }
+}
